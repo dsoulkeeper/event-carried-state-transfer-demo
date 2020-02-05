@@ -2,8 +2,12 @@ package com.event.practice.eventcarriedstatetransferdemopublisher.dto;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
-public class AddressDto {
+public class AddressDto implements Serializable {
+    private static final long serialVersionUID = -426602671809098312L;
+
     private AddressType addressType;
     private String line1;
     private String line2;

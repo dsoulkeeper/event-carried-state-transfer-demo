@@ -4,7 +4,6 @@ import com.event.practice.eventcarriedstatetransferdemopublisher.dto.OrderDto;
 import lombok.SneakyThrows;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
-import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
@@ -23,31 +22,25 @@ public class RabbitMqTestReceiver {
     private final BlockingQueue<OrderDto> messagesFromFanoutExchangeToReceiver2 = new ArrayBlockingQueue(3);
     private final BlockingQueue<OrderDto> messagesFromFanoutExchangeToReceiver3 = new ArrayBlockingQueue(3);
 
-    private ObjectMapper objectMapper = new ObjectMapper();
-
-    @SneakyThrows
     @RabbitListener(queues = TOPIC_EXCHANGE_QUEUE)
-    public void receiveFromTopicExchange(String orderDtoJson) {
-        messagesFromTopicExchange.add(objectMapper.readValue(orderDtoJson, OrderDto.class));
+    public void receiveFromTopicExchange(OrderDto orderDto) {
+        messagesFromTopicExchange.add(orderDto);
     }
 
     // 3 receivers to demonstrate fanout exchange behaviour
-    @SneakyThrows
     @RabbitListener(queues = FANOUT_EXCHANGE_QUEUE_1)
-    public void receiveFromFanoutExchangeToReceiver1(String orderDtoJson) {
-        messagesFromFanoutExchangeToReceiver1.add(objectMapper.readValue(orderDtoJson, OrderDto.class));
+    public void receiveFromFanoutExchangeToReceiver1(OrderDto orderDto) {
+        messagesFromFanoutExchangeToReceiver1.add(orderDto);
     }
 
-    @SneakyThrows
     @RabbitListener(queues = FANOUT_EXCHANGE_QUEUE_2)
-    public void receiveFromFanoutExchangeToReceiver2(String orderDtoJson) {
-        messagesFromFanoutExchangeToReceiver2.add(objectMapper.readValue(orderDtoJson, OrderDto.class));
+    public void receiveFromFanoutExchangeToReceiver2(OrderDto orderDto) {
+        messagesFromFanoutExchangeToReceiver2.add(orderDto);
     }
 
-    @SneakyThrows
     @RabbitListener(queues = FANOUT_EXCHANGE_QUEUE_3)
-    public void receiveFromFanoutExchangeToReceiver3(String orderDtoJson) {
-        messagesFromFanoutExchangeToReceiver3.add(objectMapper.readValue(orderDtoJson, OrderDto.class));
+    public void receiveFromFanoutExchangeToReceiver3(OrderDto orderDto) {
+        messagesFromFanoutExchangeToReceiver3.add(orderDto);
     }
 
     @SneakyThrows
