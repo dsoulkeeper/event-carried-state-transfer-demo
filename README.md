@@ -15,5 +15,6 @@
   * Once spring test context is loaded, as API is hit using `testRestTemplate`, this API will publish an `OrderDto` object to rabbitMq.
   * This message will be listened by `RabbitMqTestReceiver` as configured in `RabbitMqTestConfig`.
   * Once a message is received by `RabbitMqTestReceiver` it will be added to its internal blocking queue.
-  * In another thread (on which the test is running), will be calling `RabbitMqTestReceiver#getOrderOrWait`. This call is a blocking call that means, unless a message is available in blocking queue, call won't return.
+  * In another thread (on which the test is running), will be calling `RabbitMqTestReceiver#XXXXgetOrderOrWait`. This call is a blocking call that means, unless a message is available in blocking queue, call won't return.
   * Once a call is returned, it would have received the `OrderDto` object which then used for assertion in the test.
+  * Example covers sending and receving message to **topic exchange** and **fanout exchange**.

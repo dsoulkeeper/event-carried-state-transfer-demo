@@ -20,8 +20,13 @@ public class EventPublisherServiceImpl implements EventPublisherService {
     @Override
     @SneakyThrows
     public void publishOrderReceivedEvent(OrderDto orderDto) {
-        rabbitTemplate.convertAndSend("event-carried-state-transfer-example", "order",
-                objectMapper.writeValueAsString(orderDto));
+        String orderJson = objectMapper.writeValueAsString(orderDto);
+        // sending to topic exchange
+        rabbitTemplate.convertAndSend(TOPIC_EXCHANGE, TOPIC_EXCHANGE_ORDER_ROUTING_KEY,
+                orderJson);
+
+        // (For demo purpose) also sending to fanout exchange
+        rabbitTemplate.convertAndSend(FANOUT_EXCHANGE, "", orderJson);
         log.info("Send {} over rabbitMq", orderDto);
     }
 }
