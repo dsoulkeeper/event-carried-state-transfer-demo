@@ -1,3 +1,4 @@
-rootProject.name = 'event-carried-state-transfer-demo-publisher'
+rootProject.name = 'event-carried-state-transfer-demo'
 include ':publisher'
+include ':subscriber'
 include ':common'
