@@ -1,2 +1,3 @@
 rootProject.name = 'event-carried-state-transfer-demo-publisher'
 include ':publisher'
+include ':common'
