@@ -4,6 +4,7 @@
 * RabbitMq listening on its default port
 
 # How to run
+* To run tests ` ./gradlew publisher:test -Dcmd`.
 * Start publisher with `./gradlew publisher:bootRun -Dcmd`. It will start server on port 8080.
 * Start subscriber with `./gradlew subscriber:bootRun -Dcmd`. It will start server on port 9090.
 * Call exposed endpoint of publisher via curl as 

@@ -1,5 +1,6 @@
 package com.event.practice.publisher;
 
+import com.event.practice.common.Constant;
 import com.event.practice.common.dto.OrderDto;
 import lombok.SneakyThrows;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -7,11 +8,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
-
-import static com.event.practice.publisher.service.EventPublisherService.FANOUT_EXCHANGE_QUEUE_1;
-import static com.event.practice.publisher.service.EventPublisherService.FANOUT_EXCHANGE_QUEUE_2;
-import static com.event.practice.publisher.service.EventPublisherService.FANOUT_EXCHANGE_QUEUE_3;
-import static com.event.practice.publisher.service.EventPublisherService.TOPIC_EXCHANGE_QUEUE;
 
 @Component
 public class RabbitMqTestReceiver {
@@ -22,23 +18,23 @@ public class RabbitMqTestReceiver {
     private final BlockingQueue<OrderDto> messagesFromFanoutExchangeToReceiver2 = new ArrayBlockingQueue(3);
     private final BlockingQueue<OrderDto> messagesFromFanoutExchangeToReceiver3 = new ArrayBlockingQueue(3);
 
-    @RabbitListener(queues = TOPIC_EXCHANGE_QUEUE)
+    @RabbitListener(queues = Constant.TOPIC_EXCHANGE_QUEUE)
     public void receiveFromTopicExchange(OrderDto orderDto) {
         messagesFromTopicExchange.add(orderDto);
     }
 
     // 3 receivers to demonstrate fanout exchange behaviour
-    @RabbitListener(queues = FANOUT_EXCHANGE_QUEUE_1)
+    @RabbitListener(queues = Constant.FANOUT_EXCHANGE_QUEUE_1)
     public void receiveFromFanoutExchangeToReceiver1(OrderDto orderDto) {
         messagesFromFanoutExchangeToReceiver1.add(orderDto);
     }
 
-    @RabbitListener(queues = FANOUT_EXCHANGE_QUEUE_2)
+    @RabbitListener(queues = Constant.FANOUT_EXCHANGE_QUEUE_2)
     public void receiveFromFanoutExchangeToReceiver2(OrderDto orderDto) {
         messagesFromFanoutExchangeToReceiver2.add(orderDto);
     }
 
-    @RabbitListener(queues = FANOUT_EXCHANGE_QUEUE_3)
+    @RabbitListener(queues = Constant.FANOUT_EXCHANGE_QUEUE_3)
     public void receiveFromFanoutExchangeToReceiver3(OrderDto orderDto) {
         messagesFromFanoutExchangeToReceiver3.add(orderDto);
     }
