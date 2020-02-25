@@ -1,0 +1,25 @@
+version: '2'
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    ports:
+      - 5672:5672
+  publisher:
+    image: 'upgrad/publisher'
+    ports:
+      - '8080:8080'
+    environment:
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_RABBITMQ_PORT=5672
+    depends_on:
+      - rabbitmq
+  subscriber:
+    image: 'upgrad/subscriber'
+    ports:
+      - '9090:9090'
+    environment:
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_RABBITMQ_PORT=5672
+    depends_on:
+      - rabbitmq
