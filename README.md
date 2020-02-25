@@ -20,3 +20,9 @@
 `
 * You should see log entries on subscriber server console saying 4 msgs received.
 * 1 message from topic exchange, 3 messages from fanout exchange as we have 3 subscribers for this exchange
+
+# How to run (Dockerized with scale up)
+* start containers with `docker-compose up --scale publisher=2 --scale subscriber=2 -d`
+* Call `curl http://localhost:4000/order -d '{"orderId":"adfafdafafdasfas","products":[{"name":"abc","price":1010},{"name":"abc1","price":10101}],"receipient":{"basicProfile":{"name":"","phoneNumber":"","email":""},"addresses":[{"addressType":"billing","line1":"","line2":"","city":"","state":"","country":""},{"addressType":"delivery","line1":"","line2":"","city":"","state":"","country":""}]}}' -H "Content-Type: application/json"
+       `
+* This request will go to nginx which will load balance it to 2 backend publisher servers       
